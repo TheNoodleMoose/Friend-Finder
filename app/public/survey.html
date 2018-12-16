@@ -5,53 +5,114 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Friend Finder | Survey</title>
+    <script
+      src="https://code.jquery.com/jquery-3.3.1.min.js"
+      integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+      crossorigin="anonymous"
+    ></script>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+      crossorigin="anonymous"
+    />
   </head>
   <body>
     <h1>Friend Finder</h1>
     <div id="questionSection">
       <form>
         <label>Enter Your Name</label><br />
-        <input type="text" placeholder="John Smith" /><br />
+        <input id="name" type="text" placeholder="John Smith" /><br />
 
         <label>Upload An Image(link)</label><br />
-        <input type="text" placeholder="Image Link Here" /><br />
+        <input id="photo" type="text" placeholder="Image Link Here" /><br />
         <label>1. Question 1</label><br />
-        <select>
-          <option value="volvo">Cool</option>
-          <option value="saab">Neat</option>
-          <option value="opel">Wow</option>
-          <option value="audi">Sweet</option> </select
+        <select id="question1">
+          <option value="1">Cool</option>
+          <option value="2">Neat</option>
+          <option value="3">Wow</option>
+          <option value="4">Sweet</option> </select
         ><br />
         <label>2. Question 2</label><br />
-        <select>
-          <option value="volvo">Cool</option>
-          <option value="saab">Neat</option>
-          <option value="opel">Wow</option>
-          <option value="audi">Sweet</option> </select
+        <select id="question2">
+          <option value="1">Cool</option>
+          <option value="2">Neat</option>
+          <option value="3">Wow</option>
+          <option value="4">Sweet</option> </select
         ><br />
         <label>3. Question 3</label><br />
-        <select>
-          <option value="volvo">Cool</option>
-          <option value="saab">Neat</option>
-          <option value="opel">Wow</option>
-          <option value="audi">Sweet</option> </select
+        <select id="question3">
+          <option value="1">Cool</option>
+          <option value="2">Neat</option>
+          <option value="3">Wow</option>
+          <option value="4">Sweet</option> </select
         ><br />
         <label>4. Question 4</label><br />
-        <select
-          ><br />
-          <option value="volvo">Cool</option>
-          <option value="saab">Neat</option>
-          <option value="opel">Wow</option>
-          <option value="audi">Sweet</option> </select
+        <select id="question4">
+          <option value="1">Cool</option>
+          <option value="2">Neat</option>
+          <option value="3">Wow</option>
+          <option value="4">Sweet</option> </select
         ><br />
         <label>5. Question 5</label><br />
-        <select>
-          <option value="volvo">Cool</option>
-          <option value="saab">Neat</option>
-          <option value="opel">Wow</option>
-          <option value="audi">Sweet</option>
-        </select>
+        <select id="question5">
+          <option value="1">Cool</option>
+          <option value="2">Neat</option>
+          <option value="3">Wow</option>
+          <option value="4">Sweet</option> </select
+        ><br />
+        <button
+          id="addFriend"
+          type="submit"
+          data-toggle="modal"
+          data-target="#exampleModal"
+          class="btn btn-primary"
+        >
+          Submit
+        </button>
       </form>
     </div>
+
+    <script type="text/javascript">
+      $("#addFriend").on("click", event => {
+        event.preventDefault();
+        const newFriend = {
+          name: $("#name")
+            .val()
+            .trim(),
+          photo: $("#photo")
+            .val()
+            .trim(),
+          scores: [
+            $("#question1").val(),
+            $("#question2").val(),
+            $("#question3").val(),
+            $("#question4").val(),
+            $("#question5").val()
+          ]
+        };
+
+        $.post("/api/friends", newFriend, data => {
+          if (data) {
+            alert("You've Been Added!");
+          } else {
+            alert("There Was An Issue, Try Again!");
+          }
+          $("#name").val("");
+          $("#photo").val("");
+        });
+
+        console.log(newFriend);
+      });
+    </script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+      integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+      integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+      crossorigin="anonymous"
+    ></script>
   </body>
 </html>
