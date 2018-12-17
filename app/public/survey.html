@@ -152,6 +152,8 @@
     <script type="text/javascript">
       $("#addFriend").on("click", event => {
         event.preventDefault();
+        $("#matchName").text("");
+        $("#matchPicture").attr("src", "")
         function checkForm() {
             let isValid = true;
             if($("#name").val() === "" || $("photo").val() === "") {
