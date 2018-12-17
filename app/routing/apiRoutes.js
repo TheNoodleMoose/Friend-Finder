@@ -5,18 +5,19 @@ module.exports = function(app) {
     res.json(friendsData);
   });
 
-  // API POST Requests
-  // Below code handles when a user submits a form and thus submits data to the server.
-  // In each of the below cases, when a user submits form data (a JSON object)
-  // ...the JSON is pushed to the appropriate JavaScript array
-  // (ex. User fills out a reservation request... this data is then sent to the server...
-  // Then the server saves the data to the tableData array)
-  // ---------------------------------------------------------------------------
+  // This is the post method to get the users answers and return their match
   app.post("/api/friends", (req, res) => {
     const newFriend = req.body;
-    console.log(newFriend.scores);
+
+    // This is where we store the users matched partner
+    var bestMatch = {
+      name: "",
+      photo: ""
+    };
+    // This is an array of all the total scores for each user
     totalArray = [];
-    //Manages Friends Already Stored
+
+    // This is the the score of the user from their inputs of the quiz
     let otherTotal = 0;
     for (let i of friendsData) {
       for (let score of i.scores) {
@@ -30,11 +31,8 @@ module.exports = function(app) {
     for (let i of newFriend.scores) {
       total += parseInt(i);
     }
-    // Determines Who Is Closest
-    // for (let i = 0; i < totalArray.length; i++) {
-    //   console.log(Math.abs(total - i));
-    // }
-    function closest(array, num) {
+    // This function is what checks the scores and sees which one is closest to the users score
+    closest = (array, num) => {
       var i = 0;
       var minDiff = 1000;
       var ans;
@@ -46,21 +44,26 @@ module.exports = function(app) {
           chosenPersonIndex = i;
         }
       }
-      console.log(ans);
-      console.log(chosenPersonIndex);
+      // This is what grabs the users match and stores their info
       for (let i = 0; i < friendsData.length; i++) {
         if (chosenPersonIndex == i) {
-          console.log(`Your Match Is: ${friendsData[i].name}`);
+          bestMatch.name = `${friendsData[i].name}`;
+          bestMatch.photo = `${friendsData[i].photo}`;
         }
       }
-    }
+    };
 
-    /*call array name and desired value to be closet */
+    //We call the function with the array of all of users scores and the users total score
     closest(totalArray, total);
+    //We then push the users score to the total array
     totalArray.push(total);
+    //Reset total back to 0 for the next user
     total = 0;
+    // Simple console log to see all users scores
     console.log(totalArray);
+    // We then push the users information to the friends data table
     friendsData.push(newFriend);
-    res.json(newFriend);
+    //We then send back the users matched partner info
+    res.json(bestMatch);
   });
 };
