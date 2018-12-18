@@ -1,3 +1,4 @@
+//This requires the table of freinds from friends.js
 const friendsData = require("../data/friends");
 
 module.exports = function(app) {
