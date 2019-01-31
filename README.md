@@ -2,7 +2,7 @@
 
 ## Welcome To The Repo For My Coding Freind Finder Application.
 
-### This App Utilizes Node and Express To Create A Simple Combatibility Tester Depending On You Answers
+### This App Utilizes Node and Express To Create A Simple Combatibility Tester Depending On Your Answers
 
 ## How It Works
 
